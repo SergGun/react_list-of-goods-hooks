@@ -2,6 +2,8 @@ import 'bulma/css/bulma.css';
 import './App.scss';
 import { useState } from 'react';
 
+type SotrType = 'alpha' | 'length' | null;
+
 export const goodsFromServer = [
   'Dumplings',
   'Carrot',
@@ -16,7 +18,7 @@ export const goodsFromServer = [
 ];
 
 export const App = () => {
-  const [sortType, setSortType] = useState(null);
+  const [sortType, setSortType] = useState<SotrType>(null);
   const [isReversed, setIsReversed] = useState(false);
 
   const getProcessedProducts = () => {
@@ -58,7 +60,7 @@ export const App = () => {
 
   const isResetVisible = sortType !== null || isReversed;
 
-  const isActive = type => sortType === type;
+  const isActive = (type: SotrType) => sortType === type;
 
   return (
     <div className="section content">
