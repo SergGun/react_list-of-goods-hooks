@@ -2,9 +2,15 @@ import 'bulma/css/bulma.css';
 import './App.scss';
 import { useState } from 'react';
 
-type SotrType = 'alpha' | 'length' | null;
+// type SotrType = 'alpha' | 'length' | null;
 
-export const goodsFromServer = [
+enum SotrType {
+  Alpha = 'alpha',
+  Lenght = 'length',
+  None = 'none',
+}
+
+const goodsFromServer = [
   'Dumplings',
   'Carrot',
   'Eggs',
@@ -18,17 +24,17 @@ export const goodsFromServer = [
 ];
 
 export const App = () => {
-  const [sortType, setSortType] = useState<SotrType>(null);
+  const [sortType, setSortType] = useState<SotrType>(SotrType.None);
   const [isReversed, setIsReversed] = useState(false);
 
   const getProcessedProducts = () => {
     const result = [...goodsFromServer];
 
-    if (sortType === 'alpha') {
+    if (sortType === SotrType.Alpha) {
       result.sort((a, b) => a.localeCompare(b));
     }
 
-    if (sortType === 'length') {
+    if (sortType === SotrType.Lenght) {
       result.sort((a, b) => a.length - b.length);
     }
 
@@ -42,11 +48,11 @@ export const App = () => {
   const products = getProcessedProducts();
 
   const sortedProducts = () => {
-    setSortType('alpha');
+    setSortType(SotrType.Alpha);
   };
 
   const productByLength = () => {
-    setSortType('length');
+    setSortType(SotrType.Lenght);
   };
 
   const reverseProducts = () => {
@@ -54,11 +60,11 @@ export const App = () => {
   };
 
   const resetProducts = () => {
-    setSortType(null);
+    setSortType(SotrType.None);
     setIsReversed(false);
   };
 
-  const isResetVisible = sortType !== null || isReversed;
+  const isResetVisible = sortType !== SotrType.None || isReversed;
 
   const isActive = (type: SotrType) => sortType === type;
 
@@ -67,7 +73,7 @@ export const App = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${isActive('alpha') ? '' : 'is-light'}`}
+          className={`button is-info ${isActive(SotrType.Alpha) ? '' : 'is-light'}`}
           onClick={sortedProducts}
         >
           Sort alphabetically
@@ -75,7 +81,7 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-success ${isActive('length') ? '' : 'is-light'}`}
+          className={`button is-success ${isActive(SotrType.Lenght) ? '' : 'is-light'}`}
           onClick={productByLength}
         >
           Sort by length
