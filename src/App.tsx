@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 enum SortType {
   Alpha = 'alpha',
-  Lenght = 'length',
+  Length = 'length',
   None = 'none',
 }
 
@@ -34,7 +34,7 @@ export const App = () => {
       result.sort((a, b) => a.localeCompare(b));
     }
 
-    if (sortType === SortType.Lenght) {
+    if (sortType === SortType.Length) {
       result.sort((a, b) => a.length - b.length);
     }
 
@@ -52,10 +52,10 @@ export const App = () => {
   };
 
   const handleSortByLength = () => {
-    setSortType(SortType.Lenght);
+    setSortType(SortType.Length);
   };
 
-  const reverseProducts = () => {
+  const handleReverse = () => {
     setIsReversed(prev => !prev);
   };
 
@@ -81,7 +81,7 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-success ${isActive(SortType.Lenght) ? '' : 'is-light'}`}
+          className={`button is-success ${isActive(SortType.Length) ? '' : 'is-light'}`}
           onClick={handleSortByLength}
         >
           Sort by length
@@ -90,7 +90,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-warning ${isReversed ? '' : 'is-light'}`}
-          onClick={reverseProducts}
+          onClick={handleReverse}
         >
           Reverse
         </button>
