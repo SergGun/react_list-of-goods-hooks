@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // type SotrType = 'alpha' | 'length' | null;
 
-enum SotrType {
+enum SortType {
   Alpha = 'alpha',
   Lenght = 'length',
   None = 'none',
@@ -24,17 +24,17 @@ const goodsFromServer = [
 ];
 
 export const App = () => {
-  const [sortType, setSortType] = useState<SotrType>(SotrType.None);
+  const [sortType, setSortType] = useState<SortType>(SortType.None);
   const [isReversed, setIsReversed] = useState(false);
 
   const getProcessedProducts = () => {
     const result = [...goodsFromServer];
 
-    if (sortType === SotrType.Alpha) {
+    if (sortType === SortType.Alpha) {
       result.sort((a, b) => a.localeCompare(b));
     }
 
-    if (sortType === SotrType.Lenght) {
+    if (sortType === SortType.Lenght) {
       result.sort((a, b) => a.length - b.length);
     }
 
@@ -47,12 +47,12 @@ export const App = () => {
 
   const products = getProcessedProducts();
 
-  const sortedProducts = () => {
-    setSortType(SotrType.Alpha);
+  const handleSortAlpha = () => {
+    setSortType(SortType.Alpha);
   };
 
-  const productByLength = () => {
-    setSortType(SotrType.Lenght);
+  const handleSortByLength = () => {
+    setSortType(SortType.Lenght);
   };
 
   const reverseProducts = () => {
@@ -60,29 +60,29 @@ export const App = () => {
   };
 
   const resetProducts = () => {
-    setSortType(SotrType.None);
+    setSortType(SortType.None);
     setIsReversed(false);
   };
 
-  const isResetVisible = sortType !== SotrType.None || isReversed;
+  const isResetVisible = sortType !== SortType.None || isReversed;
 
-  const isActive = (type: SotrType) => sortType === type;
+  const isActive = (type: SortType) => sortType === type;
 
   return (
     <div className="section content">
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${isActive(SotrType.Alpha) ? '' : 'is-light'}`}
-          onClick={sortedProducts}
+          className={`button is-info ${isActive(SortType.Alpha) ? '' : 'is-light'}`}
+          onClick={handleSortAlpha}
         >
           Sort alphabetically
         </button>
 
         <button
           type="button"
-          className={`button is-success ${isActive(SotrType.Lenght) ? '' : 'is-light'}`}
-          onClick={productByLength}
+          className={`button is-success ${isActive(SortType.Lenght) ? '' : 'is-light'}`}
+          onClick={handleSortByLength}
         >
           Sort by length
         </button>
